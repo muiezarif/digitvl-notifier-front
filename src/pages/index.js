@@ -23,14 +23,16 @@ export default function Home() {
     const userDeviceTokens =await data.docs.map((doc) =>({...doc.data()}))
     console.log(userDeviceTokens)
     setUserTokens(userDeviceTokens)
+    const deviceTokens = await userDeviceTokens.map((val) => {
+      return val.token
+    })
+    console.log(deviceTokens)
     let headers = new Headers();
     headers.append('Content-Type', 'application/json');
   headers.append('Accept', 'application/json');
-  headers.append('Access-Control-Allow-Origin', 'http://localhost:3000');
-  headers.append('Access-Control-Allow-Credentials', 'true');
 
-  headers.append('GET', 'POST', 'OPTIONS');
-    fetch("https://digitvl-notifier-nodejs.vercel.app/send-notification",{
+    await fetch("https://digitvl-notifier-nodejs.vercel.app/send-notification",{
+          mode:"no-cors",
           method:"post",
           headers:headers,
           body:JSON.stringify({
@@ -42,11 +44,11 @@ export default function Home() {
           })
         }).then((res)=>{
             console.log(res)
-          firestore().collection("notifications").add({
-          title:title.target.value,
-          message:description.target.value,
-          url:url.target.value
-      })
+      //     firestore().collection("notifications").add({
+      //     title:title.target.value,
+      //     message:description.target.value,
+      //     url:url.target.value
+      // })
           console.log(res)
         }).catch(err => alert(err))
   }
