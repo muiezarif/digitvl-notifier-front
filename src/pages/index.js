@@ -29,7 +29,7 @@ export default function Home() {
     })
     setUserTokens(deviceTokens)
     console.log(deviceTokens)
-    const datasend = {tokens:userTokens,
+    const datasend = {tokens:deviceTokens,
       title:title.target.value,
       body:description.target.value,
       url:url.target.value,
