@@ -6,6 +6,7 @@ import styles from '@/styles/Home.module.css'
 import { useState } from 'react'
 import {db} from "../../firebase-config"
 import {collection, getDocs} from "firebase/firestore"
+import axios from 'axios'
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
@@ -22,27 +23,23 @@ export default function Home() {
     console.log(data)
     const userDeviceTokens =await data.docs.map((doc) =>({...doc.data()}))
     console.log(userDeviceTokens)
-    setUserTokens(userDeviceTokens)
-    const deviceTokens = await userDeviceTokens.map((val) => {
+    
+    const deviceTokens = userDeviceTokens.map((val) => {
       return val.token
     })
+    setUserTokens(deviceTokens)
     console.log(deviceTokens)
-    let headers = new Headers();
-    headers.append('Content-Type', 'application/json');
-  headers.append('Accept', 'application/json');
-
-    await fetch("https://digitvl-notifier-nodejs.vercel.app/send-notification",{
-          mode:"no-cors",
-          method:"post",
-          headers:headers,
-          body:JSON.stringify({
-            tokens:userDeviceTokens,
-            title:title.target.value,
-            body:description.target.value,
-            url:url.target.value,
-            coins:coins.target.value
-          })
-        }).then((res)=>{
+    const datasend = {
+      title:title.target.value,
+      body:description.target.value,
+      url:url.target.value,
+      coins:coins.target.value}
+    await axios.post("http://0240-205-164-152-235.ngrok.io/send-notification",datasend,{headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': '*',
+      'Access-Control-Allow-Credentials': 'true'
+    }}).then((res)=>{
             console.log(res)
       //     firestore().collection("notifications").add({
       //     title:title.target.value,
