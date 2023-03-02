@@ -34,7 +34,7 @@ export default function Home() {
       body:description.target.value,
       url:url.target.value,
       coins:coins.target.value}
-    await axios.post("http://0240-205-164-152-235.ngrok.io/send-notification",datasend,{headers: {
+    await axios.post("https://digitvl-notifier-nodejs-git-main-muiezarif.vercel.app/send-notification",datasend,{headers: {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Headers': '*',
