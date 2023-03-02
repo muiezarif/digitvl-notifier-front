@@ -23,12 +23,16 @@ export default function Home() {
     const userDeviceTokens =await data.docs.map((doc) =>({...doc.data()}))
     console.log(userDeviceTokens)
     setUserTokens(userDeviceTokens)
+    let headers = new Headers();
+    headers.append('Content-Type', 'application/json');
+  headers.append('Accept', 'application/json');
+  headers.append('Access-Control-Allow-Origin', 'http://localhost:3000');
+  headers.append('Access-Control-Allow-Credentials', 'true');
 
+  headers.append('GET', 'POST', 'OPTIONS');
     fetch("https://digitvl-notifier-nodejs.vercel.app/send-notification",{
           method:"post",
-          headers:{
-            'Content-Type':"application/json"
-          },
+          headers:headers,
           body:JSON.stringify({
             tokens:userDeviceTokens,
             title:title.target.value,
