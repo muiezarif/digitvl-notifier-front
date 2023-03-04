@@ -29,25 +29,33 @@ export default function Home() {
     })
     setUserTokens(deviceTokens)
     console.log(deviceTokens)
-    const datasend = {tokens:deviceTokens,
-      title:title.target.value,
-      body:description.target.value,
-      url:url.target.value,
-      coins:coins.target.value}
-    await axios.post("https://digitvl-notifier-nodejs-git-main-muiezarif.vercel.app/send-notification",datasend,{headers: {
+    let datasend
+    if (title && description && url && coins) {
+      datasend = {tokens:deviceTokens,
+        title:title.target.value,
+        body:description.target.value,
+        url:url.target.value,
+        coins:coins.target.value}  
+        await axios.post("https://digitvl-notifier-nodejs-git-main-muiezarif.vercel.app/send-notification",datasend,{headers: {
       'Content-Type': 'application/json',
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Headers': '*',
       'Access-Control-Allow-Credentials': 'true'
     }}).then((res)=>{
-            console.log(res)
+            alert("Notification sent")
       //     firestore().collection("notifications").add({
       //     title:title.target.value,
       //     message:description.target.value,
       //     url:url.target.value
       // })
           console.log(res)
-        }).catch(err => alert(err))
+        }).catch(err => console.log(err))
+    }else{
+      alert("Fill All fields")
+      return;
+    }
+    
+    
   }
   return (
     <div className='container'>
