@@ -59,9 +59,10 @@ export default function Home() {
           if(err.code === "ERR_NETWORK"){
             const refDoc = await addDoc(notificationCollectionRef,{message:newdescription.target.value || null,title:newtitle.target.value || null,url:newurl.target.value || null}).then((res) =>{
               console.log("res")
-              console.log(refDoc.id)
+              
 
           }).catch(err => console.log(err))
+          console.log(refDoc.id)
           }
           console.log(err)
         })
