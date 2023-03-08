@@ -15,7 +15,7 @@ export default function Home() {
   const [newurl,setUrl] = useState("")
   const [coins,setCoins] = useState(0)
   const [userTokens,setUserTokens] = useState([])
-  const userCollectionRef = collection(db,"userToken")
+  const userCollectionRef = collection(db,"users")
   const notificationCollectionRef = collection(db,"notifications")
   const onSubmit = async (e) =>{
     e.preventDefault();
@@ -97,7 +97,7 @@ export default function Home() {
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-
+{/* {userTokens} */}
         </div>
       </div>
     </div>
