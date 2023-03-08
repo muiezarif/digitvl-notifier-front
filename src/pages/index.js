@@ -10,9 +10,9 @@ import axios from 'axios'
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
-  const [title,setTitle] = useState("")
-  const [description,setDescription] = useState("")
-  const [url,setUrl] = useState("")
+  const [newtitle,setTitle] = useState("")
+  const [newdescription,setDescription] = useState("")
+  const [newurl,setUrl] = useState("")
   const [coins,setCoins] = useState(0)
   const [userTokens,setUserTokens] = useState([])
   const userCollectionRef = collection(db,"userToken")
@@ -32,11 +32,11 @@ export default function Home() {
     setUserTokens(deviceTokens)
     console.log(deviceTokens)
     let datasend
-    if (title && description && url && coins) {
+    if (newtitle && newdescription && newurl && coins) {
       datasend = {tokens:deviceTokens,
-        title:title.target.value,
-        body:description.target.value,
-        url:url.target.value,
+        title:newtitle.target.value,
+        body:newdescription.target.value,
+        url:newurl.target.value,
         coins:coins.target.value}  
         await axios.post("https://digitvl-notifier-nodejs-git-main-muiezarif.vercel.app/send-notification",datasend,{headers: {
       'Content-Type': 'application/json',
@@ -45,14 +45,26 @@ export default function Home() {
       'Access-Control-Allow-Credentials': 'true'
     }}).then(async (res)=>{
             alert("Notification sent")
-            await getDocs(notificationCollectionRef,{message:description,title:title,url:url})
+            const refDoc =await addDoc(notificationCollectionRef,{message:newdescription.target.value || null,title:newtitle.target.value || null,url:newurl.target.value || null}).then((res) =>{
+                console.log("res")
+                console.log(res)
+            }).catch(err => console.log(err))
       //     firestore().collection("notifications").add({
       //     title:title.target.value,
       //     message:description.target.value,
       //     url:url.target.value
       // })
           console.log(res)
-        }).catch(err => console.log(err))
+        }).catch(async err => {
+          if(err.code === "ERR_NETWORK"){
+            const refDoc = await addDoc(notificationCollectionRef,{message:newdescription.target.value || null,title:newtitle.target.value || null,url:newurl.target.value || null}).then((res) =>{
+              console.log("res")
+              console.log(refDoc.id)
+
+          }).catch(err => console.log(err))
+          }
+          console.log(err)
+        })
     }else{
       alert("Fill All fields")
       return;
