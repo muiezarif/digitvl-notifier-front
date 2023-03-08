@@ -5,7 +5,7 @@ import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 import { useState } from 'react'
 import {db} from "../../firebase-config"
-import {collection, getDocs} from "firebase/firestore"
+import {collection, getDocs,addDoc} from "firebase/firestore"
 import axios from 'axios'
 const inter = Inter({ subsets: ['latin'] })
 
@@ -16,10 +16,12 @@ export default function Home() {
   const [coins,setCoins] = useState(0)
   const [userTokens,setUserTokens] = useState([])
   const userCollectionRef = collection(db,"userToken")
+  const notificationCollectionRef = collection(db,"notifications")
   const onSubmit = async (e) =>{
     e.preventDefault();
     // console.log(description.target.value)
     const data = await getDocs(userCollectionRef)
+    
     console.log(data)
     const userDeviceTokens =await data.docs.map((doc) =>({...doc.data()}))
     console.log(userDeviceTokens)
@@ -41,8 +43,9 @@ export default function Home() {
       'Access-Control-Allow-Origin': '*',
       'Access-Control-Allow-Headers': '*',
       'Access-Control-Allow-Credentials': 'true'
-    }}).then((res)=>{
+    }}).then(async (res)=>{
             alert("Notification sent")
+            await getDocs(notificationCollectionRef,{message:description,title:title,url:url})
       //     firestore().collection("notifications").add({
       //     title:title.target.value,
       //     message:description.target.value,
@@ -81,7 +84,7 @@ export default function Home() {
   </div>
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
-{JSON.stringify(userTokens)}
+
         </div>
       </div>
     </div>
