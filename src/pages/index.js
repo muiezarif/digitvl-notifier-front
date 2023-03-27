@@ -7,6 +7,7 @@ import { useState } from 'react'
 import {db} from "../../firebase-config"
 import {collection, getDocs,addDoc} from "firebase/firestore"
 import axios from 'axios'
+import LoginScreen from '../../components/LoginScreen'
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
@@ -74,32 +75,35 @@ export default function Home() {
     
   }
   return (
-    <div className='container'>
-      <div className='row'>
-        <div className='col-md-12'><h2>Send Notification</h2></div>
-        <div className='col-md-12'>
-        <form onSubmit={onSubmit}>
-  <div class="mb-3">
-    <label for="title" class="form-label">Title</label>
-    <input type="text" class="form-control" onChange={(val) => setTitle(val)} id="title"/>
-  </div>
-  <div class="mb-3">
-    <label for="description" class="form-label">Description</label>
-    <input type="text" class="form-control" onChange={(val) => setDescription(val)} id="description"/>
-  </div>
-  <div class="mb-3">
-    <label for="url" class="form-label">Url</label>
-    <input type="text" class="form-control" onChange={(val) => setUrl(val)} id="url"/>
-  </div>
-  <div class="mb-3">
-    <label for="coins" class="form-label">Coins For Notification Earn</label>
-    <input type="number" class="form-control" onChange={(val) => setCoins(val)} id="coins"/>
-  </div>
-  <button type="submit" class="btn btn-primary">Submit</button>
-</form>
-{/* {userTokens} */}
-        </div>
-      </div>
+//     <div className='container'>
+//       <div className='row'>
+//         <div className='col-md-12'><h2>Send Notification</h2></div>
+//         <div className='col-md-12'>
+//         <form onSubmit={onSubmit}>
+//   <div class="mb-3">
+//     <label for="title" class="form-label">Title</label>
+//     <input type="text" class="form-control" onChange={(val) => setTitle(val)} id="title"/>
+//   </div>
+//   <div class="mb-3">
+//     <label for="description" class="form-label">Description</label>
+//     <input type="text" class="form-control" onChange={(val) => setDescription(val)} id="description"/>
+//   </div>
+//   <div class="mb-3">
+//     <label for="url" class="form-label">Url</label>
+//     <input type="text" class="form-control" onChange={(val) => setUrl(val)} id="url"/>
+//   </div>
+//   <div class="mb-3">
+//     <label for="coins" class="form-label">Coins For Notification Earn</label>
+//     <input type="number" class="form-control" onChange={(val) => setCoins(val)} id="coins"/>
+//   </div>
+//   <button type="submit" class="btn btn-primary">Submit</button>
+// </form>
+// {/* {userTokens} */}
+//         </div>
+//       </div>
+//     </div>
+    <div>
+      <LoginScreen/>
     </div>
   )
 }
