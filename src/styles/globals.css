@@ -99,7 +99,9 @@ a {
   color: inherit;
   text-decoration: none;
 }
-
+.cus-h-100{
+  height:50vw
+}
 @media (prefers-color-scheme: dark) {
   html {
     color-scheme: dark;
