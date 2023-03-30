@@ -42,10 +42,10 @@ function HomeScreen() {
       let datasend
       if (newtitle && newdescription && newurl && coins) {
         datasend = {tokens:deviceTokens,
-          title:newtitle.target.value,
-          body:newdescription.target.value,
-          url:newurl.target.value,
-          coins:coins.target.value}  
+          title:newtitle,
+          body:newdescription,
+          url:newurl,
+          coins:coins}  
           await axios.post("https://digitvl-notifier-nodejs-git-main-muiezarif.vercel.app/send-notification",datasend,{headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
@@ -53,7 +53,7 @@ function HomeScreen() {
         'Access-Control-Allow-Credentials': 'true'
       }}).then(async (res)=>{
               alert("Notification sent")
-              const refDoc =await addDoc(notificationCollectionRef,{message:newdescription.target.value || null,title:newtitle.target.value || null,url:newurl.target.value || null}).then((res) =>{
+              const refDoc =await addDoc(notificationCollectionRef,{message:newdescription || null,title:newtitle || null,url:newurl || null}).then((res) =>{
                   console.log("res")
                   console.log(res)
                   setTitle("")
@@ -69,7 +69,7 @@ function HomeScreen() {
             console.log(res)
           }).catch(async err => {
             if(err.code === "ERR_NETWORK"){
-              const refDoc = await addDoc(notificationCollectionRef,{message:newdescription.target.value || null,title:newtitle.target.value || null,url:newurl.target.value || null}).then((res) =>{
+              const refDoc = await addDoc(notificationCollectionRef,{message:newdescription || null,title:newtitle || null,url:newurl || null}).then((res) =>{
                 console.log("res")
                 setTitle("")
                 setDescription("")
@@ -97,19 +97,19 @@ function HomeScreen() {
           <form onSubmit={onSubmit}>
     <div class="mb-3">
       <label for="title" class="form-label">Title</label>
-      <input type="text" class="form-control" onChange={(val) => setTitle(val)} id="title"/>
+      <input type="text" value={newtitle} class="form-control" onChange={(e) => setTitle(e.target.value)} id="title"/>
     </div>
     <div class="mb-3">
       <label for="description" class="form-label">Description</label>
-      <input type="text" class="form-control" onChange={(val) => setDescription(val)} id="description"/>
+      <input type="text" value={newdescription} class="form-control" onChange={(e) => setDescription(e.target.value)} id="description"/>
     </div>
     <div class="mb-3">
       <label for="url" class="form-label">Url</label>
-      <input type="text" class="form-control" onChange={(val) => setUrl(val)} id="url"/>
+      <input type="text" value={newurl} class="form-control" onChange={(e) => setUrl(e.target.value)} id="url"/>
     </div>
     <div class="mb-3">
       <label for="coins" class="form-label">Coins For Notification Earn</label>
-      <input type="number" class="form-control" onChange={(val) => setCoins(val)} id="coins"/>
+      <input type="number" value={coins} class="form-control" onChange={(e) => setCoins(e.target.value)} id="coins"/>
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>
