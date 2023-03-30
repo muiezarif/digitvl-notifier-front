@@ -56,6 +56,10 @@ function HomeScreen() {
               const refDoc =await addDoc(notificationCollectionRef,{message:newdescription.target.value || null,title:newtitle.target.value || null,url:newurl.target.value || null}).then((res) =>{
                   console.log("res")
                   console.log(res)
+                  setTitle("")
+                  setDescription("")
+                  setUrl("")
+                  setCoins(0)
               }).catch(err => console.log(err))
         //     firestore().collection("notifications").add({
         //     title:title.target.value,
@@ -67,6 +71,10 @@ function HomeScreen() {
             if(err.code === "ERR_NETWORK"){
               const refDoc = await addDoc(notificationCollectionRef,{message:newdescription.target.value || null,title:newtitle.target.value || null,url:newurl.target.value || null}).then((res) =>{
                 console.log("res")
+                setTitle("")
+                setDescription("")
+                setUrl("")
+                setCoins(0)
                 
   
             }).catch(err => console.log(err))
